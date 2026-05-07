@@ -1,7 +1,7 @@
 const express = require('express')
 const app = express()
 const cors = require('cors');
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 const port = process.env.PORT || 5000;
 
 
@@ -37,9 +37,14 @@ async function run() {
 
     app.get('/users/:id' ,async (req, res) =>{
 
-      console.log(req)
+      const id = req.params.id ;
 
-      res.send('get details by id')
+      const query = {
+        _id:new ObjectId(id)
+      }
+ const user = await userCollection.findOne(query)
+// console.log(req)
+      res.send(user)
 
     })
 
